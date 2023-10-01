@@ -9,6 +9,7 @@ export const env = createEnv({
     NEXTAUTH_SECRET: z.string().min(1),
     SERVER_SECRET: z.string().min(1),
     KEY_SECRET: z.string().min(1),
+    SALT: z.string().min(1),
   },
   client: {
     // NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: z.string().min(1),
@@ -20,5 +21,6 @@ export const env = createEnv({
     NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
     SERVER_SECRET: process.env.SERVER_SECRET,
     KEY_SECRET: process.env.KEY_SECRET,
+    SALT: process.env.SALT,
   },
 });
