@@ -1,31 +1,21 @@
 import { env } from "@/env.mjs";
 import { authOptions } from "@/lib/authOptions";
-import { getServerSession } from "next-auth";
+import { Session, getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 import { db } from "@/db";
 import { generateEncryptionKey } from "@/lib/generateEncryptionKey";
 import { encryptKeys } from "@/lib/hashKeys";
-// import { users } from "@/db/schema";
-// import { eq } from "drizzle-orm";
+import { users } from "@/db/schema";
+import { eq } from "drizzle-orm";
+import jwt from "jsonwebtoken";
 export const GET = async () => {
-  const session = await getServerSession(authOptions);
+  const session= await getServerSession(authOptions);
   if (!session) {
     return NextResponse.redirect("/signin");
   }
   try {
-    console.time("generateEncryptionKey");
-    const { keyEncyptor, secretKeyEncryptor } = await generateEncryptionKey();
-    if (!keyEncyptor || !secretKeyEncryptor) return NextResponse.error();
-    const API_KEY = await encryptKeys(
-      keyEncyptor,
-      session.user.id
-    );
-    const API_SECRET = await encryptKeys(
-      secretKeyEncryptor,
-      JSON.stringify(session.user)
-    );
-    console.timeEnd("generateEncryptionKey");
-    
+    const API_SECRET = jwt.sign(session.user, env.SERVER_SECRET);
+    const API_KEY = jwt.sign(session.user.id, env.KEY_SECRET);
     // await db
     //   .update(users)
     //   .set({
@@ -35,8 +25,8 @@ export const GET = async () => {
     //   .where(eq(users.id, session.user.id))
     //   .execute();
     return NextResponse.json({
-        API_KEY,
-        API_SECRET,
+      API_KEY,
+      API_SECRET,
     });
   } catch (error) {
     console.error(error);
