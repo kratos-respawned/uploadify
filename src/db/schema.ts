@@ -4,9 +4,9 @@ import {
   text,
   primaryKey,
   integer,
+  
 } from "drizzle-orm/pg-core";
 import type { AdapterAccount } from "next-auth/adapters";
-
 export const users = pgTable("user", {
   id: text("id").notNull().primaryKey(),
   name: text("name"),
@@ -15,9 +15,8 @@ export const users = pgTable("user", {
   image: text("image"),
   api_secret: text("api_secret"),
   api_key: text("api_key"),
-  storage_usage: integer("storage_usage"),
+  storage_usage: integer("storage_usage").default(0),
 });
-
 export const accounts = pgTable(
   "account",
   {
@@ -39,7 +38,6 @@ export const accounts = pgTable(
     compoundKey: primaryKey(account.provider, account.providerAccountId),
   })
 );
-
 export const sessions = pgTable("session", {
   sessionToken: text("sessionToken").notNull().primaryKey(),
   userId: text("userId")
@@ -47,7 +45,6 @@ export const sessions = pgTable("session", {
     .references(() => users.id, { onDelete: "cascade" }),
   expires: timestamp("expires", { mode: "date" }).notNull(),
 });
-
 export const verificationTokens = pgTable(
   "verificationToken",
   {
