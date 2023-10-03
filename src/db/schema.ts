@@ -56,3 +56,9 @@ export const verificationTokens = pgTable(
     compoundKey: primaryKey(vt.identifier, vt.token),
   })
 );
+export const files=pgTable("files",{
+  fileName:text("fileName").notNull(),
+  fileSize:integer("fileSize").notNull(),
+  fileUrl:text("fileUrl").notNull(),
+  userId:text("userId").notNull().references(()=>users.id,{onDelete:"cascade"}),
+});
