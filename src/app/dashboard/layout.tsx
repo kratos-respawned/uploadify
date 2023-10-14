@@ -3,11 +3,12 @@ import { authOptions } from "@/lib/authOptions";
 import { getServerSession } from "next-auth";
 import { Navlink } from "./Navlinks";
 import { Footer } from "../Footer";
+import { redirect } from "next/navigation";
 const Layout = async ({ children }: { children: React.ReactNode }) => {
   const session = await getServerSession(authOptions);
-  //   if (!session) {
-  //     redirect("/login");
-  //   }
+  if (!session) {
+    redirect("/login");
+  }
   return (
     <div className="relative min-h-screen ">
       <Navbar session={session} />
