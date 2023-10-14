@@ -13,6 +13,7 @@ import {
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
 import { signOut } from "next-auth/react";
+import Link from "next/link";
 
 export const UserProfile = ({ session }: { session: Session }) => {
   return (
@@ -44,8 +45,12 @@ export const UserProfile = ({ session }: { session: Session }) => {
           </DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuGroup>
-            <DropdownMenuItem>Dashboard</DropdownMenuItem>
-            <DropdownMenuItem>Billing</DropdownMenuItem>
+            <DropdownMenuItem asChild>
+              <Link href="/dashboard/files">Dashboard</Link>
+            </DropdownMenuItem>
+            <DropdownMenuItem asChild>
+              <Link href="/dashboard/comingSoon">Billing</Link>
+            </DropdownMenuItem>
           </DropdownMenuGroup>
           <DropdownMenuSeparator />
           <DropdownMenuItem

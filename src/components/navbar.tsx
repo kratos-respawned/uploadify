@@ -6,8 +6,8 @@ import { UserProfile } from "./userProfile";
 
 export const Navbar = ({ session }: { session: Session | null }) => {
   return (
-    <header className=" absolute inset-x-0 top-0 flex justify-between px-20 pt-8">
-      <Link href="/" className="font-cal text-2xl">
+    <header className=" absolute inset-x-0 top-0 flex justify-between px-4 md:px-20 pt-8">
+      <Link href="/" className="font-cal text-xl md:text-2xl">
         <span className="text-primary">Upload</span>ify
       </Link>
       {!session?.user ? (

@@ -5,6 +5,7 @@ import { authOptions } from "@/lib/authOptions";
 import { cn } from "@/lib/utils";
 import { getServerSession } from "next-auth";
 import Link from "next/link";
+import { Footer } from "./Footer";
 
 export default async function Home() {
   const session = await getServerSession(authOptions);
@@ -17,7 +18,7 @@ export default async function Home() {
           <h1 className="text-8xl font-cal py-2">File Uploader</h1>
           <p className="text-2xl font-cal pb-3">for all your JS apps.</p>
           <Link
-            href={session?.user ? "/dashboard" : "/login"}
+            href={session?.user ? "/dashboard/files" : "/login"}
             className={cn(
               buttonVariants({
                 variant: "outline",
@@ -29,19 +30,7 @@ export default async function Home() {
           </Link>
         </div>
       </section>
-      <footer className="absolute inset-x-0 bottom-0 text-center py-5 text-sm">
-        Made with ❤️
-        <br />
-        by{" "}
-        <a
-          target="_blank"
-          rel="noopener noreferrer"
-          href="https://github.com/kratos-respawned"
-          className="hover:text-primary transition-colors"
-        >
-          @kratos-respawned
-        </a>
-      </footer>
+      <Footer />
     </main>
   );
 }

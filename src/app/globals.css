@@ -56,4 +56,12 @@
   body {
     @apply bg-background text-foreground;
   }
+  *::selection {
+    @apply bg-primary;
+    color: white;
+    text-shadow: none;
+  }
+}
+* {
+  -webkit-tap-highlight-color: transparent;
 }

@@ -1,11 +1,8 @@
 import { Navbar } from "@/components/navbar";
 import { authOptions } from "@/lib/authOptions";
 import { getServerSession } from "next-auth";
-import Link from "next/link";
-import { redirect, usePathname } from "next/navigation";
-
-import { FileIcon, LockOpen1Icon, BackpackIcon } from "@radix-ui/react-icons";
 import { Navlink } from "./Navlinks";
+import { Footer } from "../Footer";
 const Layout = async ({ children }: { children: React.ReactNode }) => {
   const session = await getServerSession(authOptions);
   //   if (!session) {
@@ -14,14 +11,15 @@ const Layout = async ({ children }: { children: React.ReactNode }) => {
   return (
     <div className="relative min-h-screen ">
       <Navbar session={session} />
-      <main className="px-20 pt-32 flex gap-x-36">
-        <div className="flex flex-col gap-3">
+      <main className="px-4 md:px-20 pt-32 flex-col lg:flex-row flex gap-x-36 gap-y-5">
+        <div className="flex flex-row lg:flex-col  gap-3">
           <Navlink name={Navlinks.FILES} url="/dashboard/files" />
           <Navlink name={Navlinks.API} url="/dashboard/keys" />
-          <Navlink name={Navlinks.BILLING} url="/dashboard/coming_soon" />
+          <Navlink name={Navlinks.BILLING} url="/dashboard/comingSoon" />
         </div>
         {children}
       </main>
+      <Footer />
     </div>
   );
 };

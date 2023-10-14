@@ -4,9 +4,9 @@ import { authOptions } from "@/lib/authOptions";
 import { eq } from "drizzle-orm";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
-import { DataTable } from "./dataTable";
+import { DataTable } from "../dataTable";
 
-const Dashboard = async () => {
+const Files = async () => {
   const session = await getServerSession(authOptions);
   if (!session) {
     redirect("/login");
@@ -21,5 +21,4 @@ const Dashboard = async () => {
     </section>
   );
 };
-
-export default Dashboard;
+export default Files;

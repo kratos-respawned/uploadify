@@ -20,7 +20,6 @@ export const getKeys = async (): Promise<
     return {
       API_KEY: null,
       API_SECRET: null,
-      //   error: null,
       error: "No session",
     };
   }

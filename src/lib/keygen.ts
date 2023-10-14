@@ -3,7 +3,7 @@ import { users } from "@/db/schema";
 import { env } from "@/env.mjs";
 import { eq } from "drizzle-orm";
 import jwt from "jsonwebtoken";
-import { Session, getServerSession } from "next-auth";
+import { getServerSession } from "next-auth";
 import { authOptions } from "./authOptions";
 export const keygen = async (): Promise<
   | {
@@ -22,7 +22,6 @@ export const keygen = async (): Promise<
     return {
       API_KEY: null,
       API_SECRET: null,
-      //   error: null,
       error: "No session",
     };
   }
