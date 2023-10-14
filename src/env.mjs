@@ -10,11 +10,8 @@ export const env = createEnv({
     SERVER_SECRET: z.string().min(1),
     KEY_SECRET: z.string().min(1),
     ADMIN_SECRET: z.string().min(1),
-    
   },
-  client: {
-    // NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: z.string().min(1),
-  },
+  client: {},
   runtimeEnv: {
     DATABASE_URL: process.env.DATABASE_URL,
     GITHUB_CLIENT_SECRET: process.env.GITHUB_CLIENT_SECRET,

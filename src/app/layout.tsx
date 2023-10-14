@@ -3,9 +3,10 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { Montserrat } from "next/font/google";
 import localFont from "next/font/local";
+import { ThemeProvider } from "@/components/theme/themeProvider";
 const sans = Montserrat({
   display: "swap",
-  weight: ["400"],
+  weight: ["400", "500"],
   style: ["normal"],
   subsets: ["latin"],
   variable: "--font-montserrat",
@@ -26,8 +27,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={cn("font-inter", sans.variable, calSans.variable)}>
-        {children}
+      <body className={cn("font-inter ", sans.variable, calSans.variable)}>
+        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );

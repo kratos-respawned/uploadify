@@ -9,10 +9,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-
 import { signIn } from "next-auth/react";
-import { useSearchParams } from "next/navigation";
-
 import { useRef, useState } from "react";
 type OAuthProviders = "github" | "google";
 export function LoginContainer() {
@@ -21,7 +18,7 @@ export function LoginContainer() {
     setIsLoading(true);
     try {
       await signIn(provider, {
-        callbackUrl: "/",
+        callbackUrl: "/dashboard",
       });
     } catch (error) {
       console.log(error);
@@ -33,8 +30,16 @@ export function LoginContainer() {
   return (
     <Card className=" max-w-sm w-full">
       <CardHeader className="space-y-1">
-        <CardTitle className="text-2xl text-center">Login</CardTitle>
-        <CardDescription className="text-center">Enter your email below to login</CardDescription>
+        <CardTitle className="text-3xl font-cal ">
+          Upload<span className="text-primary">ify</span>
+        </CardTitle>
+        <CardDescription className="text-lg pt-2">
+          <span className="font-semibold font-cal block">Sign in</span>
+          <span>
+            to continue to{" "}
+            <span className="font-semibold font-cal">uploadify</span>
+          </span>
+        </CardDescription>
       </CardHeader>
       <CardContent className="">
         <Button

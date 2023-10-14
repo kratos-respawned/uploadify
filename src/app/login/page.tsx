@@ -3,16 +3,14 @@ import { LoginContainer } from "./SignIn";
 import { authOptions } from "@/lib/authOptions";
 import { redirect } from "next/navigation";
 
-
-
 const Login = async () => {
-  const session = await getServerSession(authOptions);
-  if(session){
-   redirect("/"); 
-  } 
+  // const session = await getServerSession(authOptions);
+  // if(session){
+  //  redirect("/");
+  // }
   return (
     <main className=" min-h-screen grid place-items-center px-4">
-      <LoginContainer/>
+      <LoginContainer />
     </main>
   );
 };

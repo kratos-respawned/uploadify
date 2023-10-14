@@ -8,7 +8,6 @@ import { z } from "zod";
 export const runtime = "edge";
 export const POST = async (request: Request) => {
   try {
-    console.log("function called");
     const req = await request.json();
     const token = request.headers.get("authorization");
     console.log(token);
