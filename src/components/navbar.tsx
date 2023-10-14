@@ -1,10 +1,12 @@
 import { cn } from "@/lib/utils";
-import { Session } from "next-auth";
+import { Session, getServerSession } from "next-auth";
 import Link from "next/link";
 import { buttonVariants } from "./ui/button";
 import { UserProfile } from "./userProfile";
+import { authOptions } from "@/lib/authOptions";
 
-export const Navbar = ({ session }: { session: Session | null }) => {
+export const Navbar = async () => {
+  const session = await getServerSession(authOptions);
   return (
     <header className=" absolute inset-x-0 top-0 flex justify-between px-4 md:px-20 pt-8">
       <Link href="/" className="font-cal text-xl md:text-2xl">
