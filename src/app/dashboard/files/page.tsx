@@ -8,15 +8,14 @@ import { DataTable } from "../dataTable";
 
 const Files = async () => {
   const session = await getServerSession(authOptions);
-  if (!session) {
-    redirect("/login");
-  }
+
   const uploads = await db
     .select()
     .from(files)
-    .where(eq(files.userId, session.user.id));
+    .where(eq(files.userId, session?.user.id || " "));
   return (
     <section className="flex-grow">
+      {JSON.stringify(session)}
       <DataTable data={uploads} />
     </section>
   );
