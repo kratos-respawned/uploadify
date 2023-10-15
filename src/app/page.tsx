@@ -10,31 +10,27 @@ import { Footer } from "./Footer";
 export default async function Home() {
   const session = await getServerSession(authOptions);
   return (
-    <main className="relative  h-[100dvh]">
-      <Navbar />
-      <section className=" grid place-items-center w-full h-full">
-        <div className="text-center relative ">
-          <span className="-z-10 absolute w-32  aspect-square top-4 blur-3xl  -translate-y-full max-sm:-left-0 -left-9 -translate-x-full  rounded-full bg-primary" />
-          <h1 className=" text-[clamp(2.5rem,10vw,5rem)]  font-cal py-2">
-            File Uploader
-          </h1>
-          <p className="text-[clamp(1rem,5vw,1.5rem)] font-cal pb-3">
-            for all your JS apps.
-          </p>
-          <Link
-            href={session?.user ? "/dashboard/files" : "/login"}
-            className={cn(
-              buttonVariants({
-                variant: "outline",
-                className: "",
-              })
-            )}
-          >
-            Get Started
-          </Link>
-        </div>
-      </section>
-      <Footer />
-    </main>
+    <section className="h-[100dvh] grid place-items-center w-full ">
+      <div className="text-center relative ">
+        <span className="-z-10 absolute w-32  aspect-square top-4 blur-3xl  -translate-y-full max-sm:-left-0 -left-9 -translate-x-full  rounded-full bg-primary" />
+        <h1 className=" text-[clamp(2.5rem,10vw,5rem)]  font-cal py-2">
+          File Uploader
+        </h1>
+        <p className="text-[clamp(1rem,5vw,1.5rem)] font-cal pb-3">
+          for all your JS apps.
+        </p>
+        <Link
+          href={session?.user ? "/dashboard/files" : "/login"}
+          className={cn(
+            buttonVariants({
+              variant: "outline",
+              className: "",
+            })
+          )}
+        >
+          Get Started
+        </Link>
+      </div>
+    </section>
   );
 }
