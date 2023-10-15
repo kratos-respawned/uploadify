@@ -12,12 +12,12 @@ export const Navbar = async () => {
       <Link href="/" className="font-cal text-xl md:text-2xl">
         <span className="text-primary">Upload</span>ify
       </Link>
-      {!session?.user ? (
+      {session ? (
+        <UserProfile user={session.user} />
+      ) : (
         <Link href="/login" className={cn(buttonVariants())}>
           Sign In
         </Link>
-      ) : (
-        <UserProfile />
       )}
     </header>
   );
