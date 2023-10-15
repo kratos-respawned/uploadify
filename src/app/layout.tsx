@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import { Montserrat } from "next/font/google";
 import localFont from "next/font/local";
 import { ThemeProvider } from "@/components/theme/themeProvider";
+import { Analytics } from "@vercel/analytics/react";
 const sans = Montserrat({
   display: "swap",
   weight: ["400", "500"],
@@ -30,6 +31,7 @@ export default function RootLayout({
       <body className={cn("font-inter ", sans.variable, calSans.variable)}>
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
           {children}
+          <Analytics />
         </ThemeProvider>
       </body>
     </html>

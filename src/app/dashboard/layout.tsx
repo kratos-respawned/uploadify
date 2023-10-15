@@ -5,7 +5,7 @@ import { redirect } from "next/navigation";
 import { Navlink } from "./Navlinks";
 import { Footer } from "../Footer";
 import { Metadata } from "next";
-import { Analytics } from "@vercel/analytics/react";
+
 export const metadata: Metadata = {
   title: "Uploadify/Dashboard",
   description: "Dashboard to manage your files and API keys.",
@@ -21,7 +21,6 @@ const Layout = async ({ children }: { children: React.ReactNode }) => {
           <Navlink name={Navlinks.BILLING} url="/dashboard/comingSoon" />
         </div>
         {children}
-        <Analytics />
       </main>
       <Footer />
     </div>
