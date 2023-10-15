@@ -1,5 +1,3 @@
-"use client";
-import { Session } from "next-auth";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { Button } from "./ui/button";
 import {
@@ -12,10 +10,17 @@ import {
   DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
-import { signOut } from "next-auth/react";
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "@/lib/authOptions";
+import { redirect } from "next/navigation";
 import Link from "next/link";
+import { Logout } from "./Logout";
 
-export const UserProfile = ({ session }: { session: Session }) => {
+export const UserProfile = async () => {
+  const session = await getServerSession(authOptions);
+  if (!session) {
+    redirect("/login");
+  }
   return (
     <>
       <DropdownMenu>
@@ -53,15 +58,7 @@ export const UserProfile = ({ session }: { session: Session }) => {
             </DropdownMenuItem>
           </DropdownMenuGroup>
           <DropdownMenuSeparator />
-          <DropdownMenuItem
-            onClick={() => {
-              signOut();
-            }}
-            className="focus:bg-destructive/80"
-          >
-            Log out
-            <DropdownMenuShortcut></DropdownMenuShortcut>
-          </DropdownMenuItem>
+          <Logout />
         </DropdownMenuContent>
       </DropdownMenu>
     </>

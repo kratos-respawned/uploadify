@@ -17,7 +17,7 @@ export const Navbar = async () => {
           Sign In
         </Link>
       ) : (
-        <UserProfile session={session} />
+        <UserProfile />
       )}
     </header>
   );

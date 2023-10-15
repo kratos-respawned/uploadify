@@ -18,7 +18,7 @@ export function LoginContainer() {
     setIsLoading(true);
     try {
       await signIn(provider, {
-        callbackUrl: "/dashboard",
+        callbackUrl: "/dashboard/files",
       });
     } catch (error) {
       console.log(error);
