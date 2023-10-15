@@ -11,10 +11,6 @@ export const metadata: Metadata = {
   description: "Dashboard to manage your files and API keys.",
 };
 const Layout = async ({ children }: { children: React.ReactNode }) => {
-  const session = await getServerSession(authOptions);
-  if (!session) {
-    redirect("/login");
-  }
   return (
     <div className="relative min-h-screen ">
       <Navbar />

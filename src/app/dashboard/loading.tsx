@@ -1,5 +1,4 @@
 import { Skeleton } from "@/components/ui/skeleton";
-
 const Loading = () => {
   return (
     <section className="flex-grow flex flex-col gap-8">

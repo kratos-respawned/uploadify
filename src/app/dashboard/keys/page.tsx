@@ -2,8 +2,15 @@ import { keygen } from "@/lib/keygen";
 import { getKeys } from "@/lib/getKeys";
 import { CopyKeyBtn, KeygenBtn } from "./Buttons";
 import { RefreshKeys } from "./Actions";
+import { redirect } from "next/navigation";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/authOptions";
 
 const Dashboard = async () => {
+  const session = await getServerSession(authOptions);
+  if (!session) {
+    redirect("/login");
+  }
   let keys = {
     API_KEY: "-1",
     API_SECRET: "-1",
