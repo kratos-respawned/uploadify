@@ -1,6 +1,4 @@
-import { Navbar } from "@/components/navbar";
 import { Navlink } from "./Navlinks";
-import { Footer } from "../Footer";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -9,18 +7,14 @@ export const metadata: Metadata = {
 };
 const Layout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <div className="relative min-h-[100dvh] ">
-      <Navbar />
-      <main className="px-4 md:px-20 pt-32 flex-col lg:flex-row flex gap-x-36 gap-y-5">
-        <div className="flex flex-row lg:flex-col  gap-3">
-          <Navlink name={Navlinks.FILES} url="/dashboard/files" />
-          <Navlink name={Navlinks.API} url="/dashboard/keys" />
-          <Navlink name={Navlinks.BILLING} url="/dashboard/comingSoon" />
-        </div>
-        {children}
-      </main>
-      <Footer />
-    </div>
+    <main className="px-4 md:px-20 pt-32 flex-col lg:flex-row flex gap-x-36 gap-y-5">
+      <div className="flex flex-row lg:flex-col  gap-3">
+        <Navlink name={Navlinks.FILES} url="/dashboard/files" />
+        <Navlink name={Navlinks.API} url="/dashboard/keys" />
+        <Navlink name={Navlinks.BILLING} url="/dashboard/comingSoon" />
+      </div>
+      {children}
+    </main>
   );
 };
 export default Layout;
