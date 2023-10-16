@@ -12,7 +12,7 @@ const Dashboard = async () => {
     redirect("/login");
   }
   const { API_KEY, API_SECRET, error } = await getKeys();
-  if (error != null) return <div>error</div>;
+  if (error != null) return <div>{error}</div>;
 
   return (
     <section className=" flex-grow flex flex-col-reverse gap-5 lg:flex-col">
@@ -26,15 +26,11 @@ const Dashboard = async () => {
         </div>
         <div className="pb-1 text-primary truncate">
           <span className="mr-2">$</span>API_KEY:
-          <span className="ml-3 text-white">
-            {API_KEY?.slice(0, 30) + "......"}
-          </span>
+          <span className="ml-3 text-white ">{API_KEY}</span>
         </div>
         <div className="text-primary truncate">
           <span className="mr-2">$</span>API_SECRET:
-          <span className="ml-3 text-white">
-            {API_SECRET?.slice(0, 30) + "......"}
-          </span>
+          <span className="ml-3 text-white ">{API_SECRET}</span>
         </div>
       </div>
     </section>

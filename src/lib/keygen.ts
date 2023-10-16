@@ -4,7 +4,11 @@ import { env } from "@/env.mjs";
 import { getServerSession } from "next-auth";
 import { authOptions } from "./authOptions";
 import { createHmac } from "crypto";
-export const keygen = async (): Promise<
+import { eq } from "drizzle-orm";
+type Keygen = "create" | "update";
+export const keygen = async (
+  type?: Keygen
+): Promise<
   | {
       API_KEY: string;
       API_SECRET: string;
@@ -43,14 +47,24 @@ export const keygen = async (): Promise<
         .update(session.user.id + session.user.email)
         .digest("hex")
         .slice(0, 25) + secretSalt;
-    await db
-      .update(keys)
-      .set({
-        api_key: API_KEY,
-        api_secret: API_SECRET,
-        userId: session.user.id,
-      })
-      .execute();
+    if (!type || type === "create")
+      await db
+        .insert(keys)
+        .values({
+          api_key: API_KEY,
+          api_secret: API_SECRET,
+          userId: session.user.id,
+        })
+        .execute();
+    else if (type === "update")
+      await db
+        .update(keys)
+        .set({
+          api_key: API_KEY,
+          api_secret: API_SECRET,
+        })
+        .where(eq(keys.userId, session.user.id))
+        .execute();
     return {
       API_KEY,
       API_SECRET,
