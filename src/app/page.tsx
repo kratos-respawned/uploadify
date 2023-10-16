@@ -19,17 +19,34 @@ export default async function Home() {
         <p className="text-[clamp(1rem,5vw,1.5rem)] font-cal pb-3">
           for all your JS apps.
         </p>
-        <Link
-          href={session?.user ? "/dashboard/files" : "/login"}
-          className={cn(
-            buttonVariants({
-              variant: "outline",
-              className: "",
-            })
-          )}
-        >
-          Get Started
-        </Link>
+        <div className="flex justify-center items-center gap-x-4">
+          <Link
+            href={session?.user ? "/dashboard/files" : "/login"}
+            className={cn(
+              buttonVariants({
+                variant: "default",
+                className: "",
+              })
+            )}
+          >
+            Get Started
+          </Link>
+          <Link
+            href={
+              "https://github.com/kratos-respawned/younicorn_uploadify#uploadify"
+            }
+            target="_blank"
+            referrerPolicy="no-referrer"
+            className={cn(
+              buttonVariants({
+                variant: "outline",
+                className: "",
+              })
+            )}
+          >
+            Docs
+          </Link>
+        </div>
       </div>
     </section>
   );
