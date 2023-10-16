@@ -1,10 +1,9 @@
 import { db } from "@/db";
-import { users } from "@/db/schema";
+import { keys } from "@/db/schema";
 import { env } from "@/env.mjs";
-import { eq } from "drizzle-orm";
-import jwt from "jsonwebtoken";
 import { getServerSession } from "next-auth";
 import { authOptions } from "./authOptions";
+import { createHmac } from "crypto";
 export const keygen = async (): Promise<
   | {
       API_KEY: string;
@@ -26,15 +25,31 @@ export const keygen = async (): Promise<
     };
   }
   try {
-    const API_KEY = jwt.sign(session.user.id, env.KEY_SECRET);
-    const API_SECRET = jwt.sign(session.user, env.SERVER_SECRET);
+    const keySalt = createHmac("sha512", env.SERVER_SECRET)
+      .update(Date.now().toString() + session.user.email)
+      .digest("hex")
+      .slice(-5);
+    const secretSalt = createHmac("sha512", env.KEY_SECRET)
+      .update(Date.now().toString() + session.user.id)
+      .digest("hex")
+      .slice(-5);
+    const API_KEY =
+      createHmac("sha512", env.KEY_SECRET)
+        .update(session.user.id)
+        .digest("hex")
+        .slice(0, 20) + keySalt;
+    const API_SECRET =
+      createHmac("sha512", env.SERVER_SECRET)
+        .update(session.user.id + session.user.email)
+        .digest("hex")
+        .slice(0, 25) + secretSalt;
     await db
-      .update(users)
+      .update(keys)
       .set({
         api_key: API_KEY,
         api_secret: API_SECRET,
+        userId: session.user.id,
       })
-      .where(eq(users.id, session.user.id))
       .execute();
     return {
       API_KEY,

@@ -1,8 +1,8 @@
 import { db } from "@/db";
 import { files, keys, users } from "@/db/schema";
 import { env } from "@/env.mjs";
-import { requestSchema } from "@/lib/zodSchema";
-import { DrizzleError, and, eq } from "drizzle-orm";
+import { fileSchema, requestSchema } from "@/lib/zodSchema";
+import { DrizzleError, and, eq, sql } from "drizzle-orm";
 import { NextResponse } from "next/server";
 import { z } from "zod";
 export const runtime = "edge";
@@ -14,24 +14,24 @@ export const POST = async (request: Request) => {
     if (!token || token !== env.ADMIN_SECRET) {
       throw new Error("Unauthorized");
     }
-    const { key, secret, fileSize } = requestSchema.parse(req);
-    const res = await db
-      .select()
-      .from(users)
-      .leftJoin(keys, eq(keys.userId, users.id))
-      .where(and(eq(keys.api_key, key), eq(keys.api_secret, secret)));
-
-    if (!res || res.length === 0) throw new DrizzleError("Invalid Credentials");
-    const user = res[0];
-
-    if ((user.user.storage_usage || 0) + fileSize > env.MAX_LIMIT)
-      throw new Error("Storage limit exceeded");
-
+    const { fileSize, fileName, fileUrl, userID, currentStorage } =
+      fileSchema.parse(req);
+    const update = await db
+      .update(users)
+      .set({
+        storage_usage: currentStorage + fileSize,
+      })
+      .where(eq(users.id, userID))
+      .execute();
+    const updateFileTable = await db.insert(files).values({
+      fileName: fileName,
+      fileSize: fileSize,
+      fileUrl: fileUrl,
+      userId: userID,
+    });
     return NextResponse.json(
       {
-        message: "Valid",
-        userID: user.user.id,
-        currentStorage: user.user.storage_usage || 0,
+        remainingStorage: env.MAX_LIMIT - (currentStorage + fileSize),
       },
       {
         status: 200,

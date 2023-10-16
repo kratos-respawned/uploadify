@@ -1,8 +1,9 @@
 import { db } from "@/db";
-import { users } from "@/db/schema";
+import { keys, users } from "@/db/schema";
 import { eq } from "drizzle-orm";
 import { getServerSession } from "next-auth";
 import { authOptions } from "./authOptions";
+import { keygen } from "./keygen";
 export const getKeys = async (): Promise<
   | {
       API_KEY: string;
@@ -24,28 +25,36 @@ export const getKeys = async (): Promise<
     };
   }
   try {
-    const Users = await db
+    const dbKeys = await db
       .select()
-      .from(users)
-      .where(eq(users.id, session.user.id))
+      .from(keys)
+      .where(eq(keys.userId, session.user.id))
       .execute();
-    if (!Users || !Users[0]) {
+    if (!dbKeys || !dbKeys[0]) {
       return {
         API_KEY: null,
         API_SECRET: null,
         error: "Something went wrong",
       };
     }
-    if (!Users[0].api_key || !Users[0].api_secret) {
+    if (!dbKeys[0].api_key || !dbKeys[0].api_secret) {
+      const { API_KEY, API_SECRET, error } = await keygen();
+      if (error != null)
+        return {
+          API_KEY: null,
+          API_SECRET: null,
+          error: error,
+        };
       return {
-        API_KEY: "-1",
-        API_SECRET: "-1",
+        API_KEY,
+        API_SECRET,
         error: null,
       };
     }
+
     return {
-      API_KEY: Users[0].api_key,
-      API_SECRET: Users[0].api_secret,
+      API_KEY: dbKeys[0].api_key,
+      API_SECRET: dbKeys[0].api_secret,
       error: null,
     };
   } catch (error) {

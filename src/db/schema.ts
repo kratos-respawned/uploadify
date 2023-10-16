@@ -4,7 +4,6 @@ import {
   text,
   primaryKey,
   integer,
-  
 } from "drizzle-orm/pg-core";
 import type { AdapterAccount } from "next-auth/adapters";
 export const users = pgTable("user", {
@@ -13,8 +12,6 @@ export const users = pgTable("user", {
   email: text("email").notNull(),
   emailVerified: timestamp("emailVerified", { mode: "date" }),
   image: text("image"),
-  api_secret: text("api_secret"),
-  api_key: text("api_key"),
   storage_usage: integer("storage_usage").default(0),
 });
 export const accounts = pgTable(
@@ -56,9 +53,20 @@ export const verificationTokens = pgTable(
     compoundKey: primaryKey(vt.identifier, vt.token),
   })
 );
-export const files=pgTable("files",{
-  fileName:text("fileName").notNull(),
-  fileSize:integer("fileSize").notNull(),
-  fileUrl:text("fileUrl").notNull(),
-  userId:text("userId").notNull().references(()=>users.id,{onDelete:"cascade"}),
+export const files = pgTable("files", {
+  fileName: text("fileName").notNull(),
+  fileSize: integer("fileSize").notNull(),
+  fileUrl: text("fileUrl").notNull(),
+  userId: text("userId")
+    .notNull()
+    .references(() => users.id, { onDelete: "cascade" }),
+});
+export const keys = pgTable("keys", {
+  api_key: text("api_key").notNull(),
+  api_secret: text("api_secret").notNull(),
+  userId: text("userId")
+    .notNull()
+    .references(() => users.id, { onDelete: "cascade" })
+    .unique()
+    .primaryKey(),
 });
