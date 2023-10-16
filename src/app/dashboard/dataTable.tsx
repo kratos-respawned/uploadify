@@ -135,7 +135,6 @@ export const columns: ColumnDef<File>[] = [
               className="focus:bg-destructive/70"
               onClick={() => {
                 alert("Delete coming soon");
-                console.log(file.fileName);
               }}
             >
               Delete

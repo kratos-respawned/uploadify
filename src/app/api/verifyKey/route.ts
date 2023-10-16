@@ -10,7 +10,7 @@ export const POST = async (request: Request) => {
   try {
     const req = await request.json();
     const token = request.headers.get("authorization");
-    console.log(token);
+
     if (!token || token !== env.ADMIN_SECRET) {
       throw new Error("Unauthorized");
     }

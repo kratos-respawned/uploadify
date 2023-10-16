@@ -32,7 +32,6 @@ export const getKeys = async (): Promise<
       .execute();
 
     if (dbKeys.length === 0 || !dbKeys[0].api_key || !dbKeys[0].api_secret) {
-      console.log("Generating new keys");
       const { API_KEY, API_SECRET, error } = await keygen();
       if (error != null)
         return {

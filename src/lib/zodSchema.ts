@@ -8,7 +8,7 @@ export const requestSchema = z.object({
 });
 export const fileSchema = z.object({
   userID: z.string().min(1),
-  currentStorage: z.number().min(1).max(env.MAX_LIMIT),
+  currentStorage: z.number().min(0).max(env.MAX_LIMIT),
   fileName: z.string().min(1),
   fileSize: z.number().min(1).max(env.MAX_FILE_SIZE),
   fileUrl: z.string().min(1),

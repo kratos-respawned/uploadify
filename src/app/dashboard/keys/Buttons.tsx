@@ -28,7 +28,6 @@ export const CopyKeyBtn = ({
   return (
     <Button
       onClick={() => {
-        console.log("clicked");
         setCopied(false);
         navigator.clipboard
           .writeText(`API_KEY=${apiKey}\nAPI_SECRET=${secret}`)
