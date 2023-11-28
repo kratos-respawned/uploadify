@@ -1,36 +1,61 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Uploadify
+
+Uploadify is SAAS that allows you to easily upload files to the cloud. This README will guide you through the process of setting up and using Uploadify.
 
 ## Getting Started
 
-First, run the development server:
+1. Create an account on [uploadify.itsgaurav.co](https://uploadify.itsgaurav.co/) to get your client key and secret.
+2. Create a `.env` file in the root directory of your project and add your client key and secret in it:
+   ```
+   API_KEY=your_api_key_here
+   SECRET=your_secret_here
+   ```
+3. Install the `younicorn_uploadify` package:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+   ```
+   npm install younicorn_uploadify
+   yarn add younicorn_uploadify
+   pnpm i younicorn_uploadify
+   ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+4. Create an instance of the `uploadify` class:
+   ```
+   import uploadify from "younicorn_uploadify"
+   const instance = new uploadify(API_KEY, SECRET)
+   ```
+5. Use the `upload` method to upload a file:
+   ```
+   const {response, error} = await instance.upload(file)
+   ```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## API
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+### `uploadify(API_KEY, SECRET)`
 
-## Learn More
+Creates a new instance of the `uploadify` class.
 
-To learn more about Next.js, take a look at the following resources:
+- `API_KEY` - Your Uploadify API key.
+- `SECRET` - Your Uploadify API secret.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### `upload(file)`
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+Uploads a file to the cloud.
 
-## Deploy on Vercel
+- `file` - The file to upload.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Returns an object containing the uploaded file's data and any errors that occurred during the upload.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- `response` - The uploaded file's data.
+
+  ```
+  response={
+   url: string;
+   fileName: string;
+  }
+  ```
+
+- `error` - Any errors that occurred during the upload.
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
